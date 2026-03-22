@@ -1,7 +1,12 @@
+const isProd = process.env.NODE_ENV === "production";
+
+const internalHost = process.env.TAURI_DEV_HOST || "localhost";
+
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
@@ -45,6 +50,8 @@ const nextConfig: NextConfig = {
   logging: {
     browserToTerminal: true,
   },
+  assetPrefix: isProd ? undefined : `http://${internalHost}:4747`,
+  output: "export",
 };
 
 export default nextConfig;
